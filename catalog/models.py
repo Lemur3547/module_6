@@ -23,6 +23,7 @@ class Product(models.Model):
     price = models.FloatField(verbose_name='Цена')
     created_at = models.DateTimeField(verbose_name='Дата создания')
     updated_at = models.DateTimeField(verbose_name='Дата последнего изменения')
+    manufactured_at = models.DateTimeField(verbose_name='Дата производства', **NULLABLE)
 
     def __str__(self):
         return self.name
