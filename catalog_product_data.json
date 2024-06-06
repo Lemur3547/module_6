@@ -1,0 +1,54 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Смарфон Vivo",
+      "description": "Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo Vivo",
+      "preview": "",
+      "category": 1,
+      "price": 15000.0,
+      "created_at": "2024-06-06T14:32:46Z",
+      "updated_at": "2024-06-06T14:32:48Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "iPhone 16",
+      "description": "Новый айфон",
+      "preview": "",
+      "category": 1,
+      "price": 500000.0,
+      "created_at": "2024-06-06T14:36:02Z",
+      "updated_at": "2024-06-06T14:36:03Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Samsung",
+      "description": "Телевизор",
+      "preview": "",
+      "category": 2,
+      "price": 50000.0,
+      "created_at": "2024-06-06T14:36:55Z",
+      "updated_at": "2024-06-06T14:36:56Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Xiaomi",
+      "description": "Китайский продукт",
+      "preview": "",
+      "category": 2,
+      "price": 28000.0,
+      "created_at": "2024-06-06T14:37:35Z",
+      "updated_at": "2024-06-06T14:37:36Z"
+    }
+  }
+]
