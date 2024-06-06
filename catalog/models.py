@@ -21,8 +21,8 @@ class Product(models.Model):
     preview = models.ImageField(upload_to='previews/', verbose_name='Превью', **NULLABLE)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, **NULLABLE)
     price = models.FloatField(verbose_name='Цена')
-    created_at = models.DateTimeField(verbose_name='Дата создания')
-    updated_at = models.DateTimeField(verbose_name='Дата последнего изменения')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата последнего изменения')
 
     def __str__(self):
         return self.name
