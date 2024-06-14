@@ -1,7 +1,6 @@
-from django.db.models import Model
 from django.shortcuts import render
 
-from catalog.models import Product
+from catalog.models import Product, Category
 
 
 def index(request):
@@ -25,3 +24,17 @@ def product(request, pk):
         'object': Product.objects.get(pk=pk)
     }
     return render(request, 'main/product.html', context)
+
+
+def add_product(request):
+    context = {
+        'category_list': Category.objects.all()
+    }
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        preview = request.FILES.get('preview')
+        category = request.POST.get('category')
+        price = request.POST.get('price')
+        Product.objects.create(name=name, description=description, preview=preview, category=Category.objects.get(pk=category), price=price)
+    return render(request, 'main/add_product.html', context)
