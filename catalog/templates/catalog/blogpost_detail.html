@@ -1,0 +1,17 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+{% load my_tags %}
+    <div class="row mt-5">
+        {% if object.preview %}
+        <div class="col-4">
+            <img src="{{ object.preview|media_filter }}" class="rounded float-start w-100">
+        </div>
+        {% endif %}
+        <div class="col">
+            <h1 class="mb-4 ms-3">{{ object.name }}</h1>
+            <p class="mb-4 ms-3">{{ object.body }}</p>
+
+
+        </div>
+    </div>
+{% endblock %}

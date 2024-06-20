@@ -38,3 +38,28 @@ class ProductCreateView(CreateView):
     model = Product
     fields = ('name', 'description', 'preview', 'category', 'price')
     success_url = reverse_lazy('catalog:index')
+
+
+class PostCreateView(CreateView):
+    model = BlogPost
+    fields = ('name', 'body', 'preview', 'is_published',)
+    success_url = reverse_lazy('catalog:blog')
+
+
+class PostListView(ListView):
+    model = BlogPost
+
+
+class PostDetailView(DetailView):
+    model = BlogPost
+
+
+class PostUpdateView(UpdateView):
+    model = BlogPost
+    fields = ('name', 'body', 'preview', 'is_published',)
+    success_url = reverse_lazy('catalog:blog')
+
+
+class PostDeleteView(DeleteView):
+    model = BlogPost
+    success_url = reverse_lazy('catalog:blog')
