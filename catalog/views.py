@@ -53,6 +53,12 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = BlogPost
 
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        self.object.save()
+        return self.object
+
 
 class PostUpdateView(UpdateView):
     model = BlogPost

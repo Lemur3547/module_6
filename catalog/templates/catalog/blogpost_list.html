@@ -21,8 +21,10 @@
                 {% endif %}
                 <div class="card-body">
                     <h4 class="card-title">{{ post.name }}</h4>
-                    <p class="card-text">{{ post.body|truncatechars:100 }}</p>
-                    <div class="btn-group" role="group" aria-label="Basic example">
+                    <p>{{ post.body|truncatechars:100 }}</p>
+                    <p class="text-end">{{ post.views_count }} просмотров.</p>
+                    <div class="text-end">
+                        <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-sm btn-outline-primary">
                             <a href="{% url 'catalog:edit_post' post.pk %}" class="text-decoration-none text-reset">
                                 Изменить
@@ -33,6 +35,7 @@
                                 Удалить
                             </a>
                         </button>
+                        </div>
                     </div>
                 </div>
             </a>
