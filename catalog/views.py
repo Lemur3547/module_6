@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView, View, UpdateV
 from pytils.translit import slugify
 
 from catalog.models import Product, BlogPost
+from catalog.send_email import send_email
 
 
 class ProductListView(ListView):
@@ -70,6 +71,11 @@ class PostDetailView(DetailView):
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
+
+        if self.object.views_count == 100:
+            obj = self.object
+            send_email(obj)
+
         return self.object
 
 
