@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'catalog/base.html' %}
 {% block content %}
 <h1 class="mt-3 text-center">Добавить продукт</h1>
 <p class="text-start mt-3">Заполните форму и мы добавим ваш продукт в наш магазин.</p>
@@ -20,8 +20,8 @@
                     <div class="mb-3">
                         Категория
                         <select name="category" class="form-select">
-                            {% for category in category_list %}
-                            <option value="{{ category.pk }}">{{ category.name }}</option>
+                            {% for category in form.category %}
+                            {{ category }}
                             {% endfor %}
                         </select>
                     </div>
