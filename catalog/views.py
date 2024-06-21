@@ -12,7 +12,8 @@ class ProductListView(ListView):
 
 
 class ContactsView(View):
-    template_name = 'catalog/contacts.html'
+    def get(self, request):
+        return render(request, 'catalog/contacts.html')
 
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
@@ -21,15 +22,6 @@ class ContactsView(View):
             phone = request.POST.get('phone')
             print(name, email, phone)
         return render(request, 'catalog/contacts.html')
-
-
-def contacts(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        print(name, email, phone)
-    return render(request, 'catalog/contacts.html')
 
 
 class ProductDetailView(DetailView):
