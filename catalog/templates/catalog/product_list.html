@@ -3,17 +3,36 @@
 {% load humanize %}
 {% load my_tags %}
     <h1 class="mt-3 text-center">Домашняя страница</h1>
+<a href="{% url 'catalog:add_product' %}" class="btn btn-primary btn-lg">
+    Добавить продукт
+</a>
     <div class="row">
         {% for product in object_list %}
         <div class="col">
             <div class="card mx-auto mt-3" style="width: 18rem;">
-                <a href="{% url 'catalog:name_url' product.pk %}" class="text-decoration-none text-reset">
+                <a href="{% url 'catalog:product' product.pk %}" class="text-decoration-none text-reset">
                     <img src="{{ product.preview|media_filter }}"
                          class="card-img-top">
                     <div class="card-body">
                         <h4 class="card-title">{{ product.name }}</h4>
                         <h5 class="card-title">{{ product.price|intcomma }} руб.</h5>
-                        <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                        <p class="card-text mb-3">{{ product.description|truncatechars:100 }}</p>
+                        <div class="text-end">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-sm btn-outline-primary">
+                                    <a href="{% url 'catalog:edit_product' product.pk %}"
+                                       class="text-decoration-none text-reset">
+                                        Изменить
+                                    </a>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger">
+                                    <a href="{% url 'catalog:delete_product' product.pk  %}"
+                                       class="text-decoration-none text-reset">
+                                        Удалить
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </a>
             </div>

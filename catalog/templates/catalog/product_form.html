@@ -1,34 +1,26 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
-<h1 class="mt-3 text-center">Добавить продукт</h1>
-<p class="text-start mt-3">Заполните форму и мы добавим ваш продукт в наш магазин.</p>
+<h1 class="mt-3 text-center">
+    {% if object %}
+    Изменить продукт {{ object }}
+    {% else %}
+    Добавить продукт
+    {% endif %}
+</h1>
 <div class="row">
     <div class="col-6">
         <div class="card">
             <div class="card-body">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <input name="name" type="text" class="form-control" placeholder="Название" required/>
-                    </div>
-                    <div class="mb-3">
-                        <textarea name="description" class="form-control" placeholder="Описание" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <input name="preview" type="file" accept="image/*" class="form-control" required/>
-                    </div>
-                    <div class="mb-3">
-                        Категория
-                        <select name="category" class="form-select">
-                            {% for category in form.category %}
-                            {{ category }}
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <input name="price" type="number" class="form-control" placeholder="Цена" min="0" required/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Добавить</button>
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">
+                        {% if object %}
+                        Сохранить
+                        {% else %}
+                        Добавить
+                        {% endif %}
+                    </button>
                 </form>
             </div>
         </div>
