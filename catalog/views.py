@@ -4,12 +4,18 @@ from django.views.generic import ListView, DetailView, CreateView, View, UpdateV
 from pytils.translit import slugify
 
 from catalog.forms import ProductForm
-from catalog.models import Product, BlogPost
+from catalog.models import Product, BlogPost, Version
 from catalog.send_email import send_email
 
 
 class ProductListView(ListView):
     model = Product
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        active_version = Version.objects.filter(is_current=True)
+        context_data['active_version'] = active_version
+        return context_data
 
 
 class ContactsView(View):

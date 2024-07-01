@@ -16,8 +16,13 @@
                     <div class="card-body">
                         <h4 class="card-title">{{ product.name }}</h4>
                         <h5 class="card-title">{{ product.price|intcomma }} руб.</h5>
-                        <p class="card-text mb-3">{{ product.description|truncatechars:100 }}</p>
-                        <div class="text-end">
+                        <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                        {% for version in active_version %}
+                        {% if version.product.pk == product.pk %}
+                        <p>Текущая версия: {{ version }}</p>
+                        {% endif %}
+                        {% endfor %}
+                        <div class="text-end mt-3">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" class="btn btn-sm btn-outline-primary">
                                     <a href="{% url 'catalog:edit_product' product.pk %}"
