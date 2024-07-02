@@ -79,6 +79,12 @@ class ProductUpdateView(UpdateView):
         if formset.is_valid():
             formset.instance = self.object
             formset.save()
+
+        versions = Version.objects.filter(is_current=True, product=Product.objects.get(pk=self.object.pk))
+        if len(versions) > 1:
+            form.add_error(None, 'У продукта не может быть более одной активной версии.')
+            return self.form_invalid(form)
+
         return super().form_valid(form)
 
 
