@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
 
     'catalog',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,5 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'django.emailtest@yandex.ru'
 EMAIL_HOST_PASSWORD = 'idnnysgqymxqefsv'
 EMAIL_USE_SSL = True
+
+AUTH_USER_MODEL = 'users.User'
