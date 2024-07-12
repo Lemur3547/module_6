@@ -23,9 +23,9 @@
                 {{ user.email }}
             </p>
             {% if user.avatar %}
-            <img src="{{ user.avatar|media_filter }}" class="rounded-circle me-3" style="height: 40px">
+            <img src="{{ user.avatar|media_filter }}" class="rounded-circle me-3" style="height: 40px; width: 40px; object-fit: cover">
             {% else %}
-            <img src="media/users/no_profile.png" class="rounded-circle me-3" style="height: 40px">
+            <img src="/media/users/no_profile.png" class="rounded-circle me-3" style="height: 40px; width: 40px; object-fit: cover">
             {% endif %}
 
             <a href="{% url 'users:logout' %}" class="btn btn-primary me-3">
