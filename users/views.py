@@ -1,10 +1,12 @@
 import secrets
+import string
 
+from django.contrib.auth import login
+from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView
-from django.contrib.auth import login
+from django.views.generic import CreateView, TemplateView
 
 from config import settings
 from users.forms import UserRegisterForm
@@ -46,3 +48,26 @@ def email_verification_token(request, token):
     user.save()
     login(request, user)
     return redirect(reverse('catalog:index'))
+
+
+class ResetPasswordView(TemplateView):
+    def get(self, request):
+        return render(request, 'users/reset_password.html')
+
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            email = request.POST.get('email')
+            alphabet = string.ascii_letters + string.digits
+            new_password = ''.join(secrets.choice(alphabet) for i in range(20))
+            user = User.objects.get(email=email)
+            user.password = make_password(new_password, salt=None, hasher='default')
+            user.save()
+            send_mail(
+                subject='Изменение пароля',
+                message=f'Новый пароль для вашего аккаунта: {new_password}\n'
+                        f'Никому не сообщайте ваши данные для входа в систему.\n\n'
+                        f'Если вы не запрашивали новый пароль, игнорируйте данное сообщение.',
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[email]
+            )
+        return redirect(reverse('users:login'))
