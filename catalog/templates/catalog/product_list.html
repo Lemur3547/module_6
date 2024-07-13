@@ -3,9 +3,11 @@
 {% load humanize %}
 {% load my_tags %}
     <h1 class="mt-3 text-center">Домашняя страница</h1>
+{% if user.is_authenticated %}
 <a href="{% url 'catalog:add_product' %}" class="btn btn-primary btn-lg">
     Добавить продукт
 </a>
+{% endif %}
     <div class="row">
         {% for product in object_list %}
         <div class="col">
@@ -22,6 +24,19 @@
                         <p>Текущая версия: {{ version }}</p>
                         {% endif %}
                         {% endfor %}
+                        <div class="d-flex align-items-center">
+                            {% if product.author.avatar %}
+                            <img src="{{ product.author.avatar|media_filter }}" class="rounded-circle p-0"
+                                 style="height: 30px; width: 30px; object-fit: cover; margin-right: 12px">
+                            {% else %}
+                            <img src="/media/users/no_profile.png" class="rounded-circle p-0"
+                                 style="height: 30px; width: 30px; object-fit: cover; margin-right: 12px">
+                            {% endif %}
+                            <p class="p-0 m-0">
+                                {{ product.author }}
+                            </p>
+                        </div>
+                        {% if user.is_authenticated %}
                         <div class="text-end mt-3">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" class="btn btn-sm btn-outline-primary">
@@ -38,6 +53,7 @@
                                 </button>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </a>
             </div>
