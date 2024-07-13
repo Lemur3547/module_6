@@ -6,10 +6,10 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 
 from config import settings
-from users.forms import UserRegisterForm
+from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 
 
@@ -71,3 +71,12 @@ class ResetPasswordView(TemplateView):
                 recipient_list=[email]
             )
         return redirect(reverse('users:login'))
+
+
+class ProfileView(UpdateView):
+    model = User
+    form_class = UserProfileForm
+    success_url = reverse_lazy('catalog:index')
+
+    def get_object(self, queryset=None):
+        return self.request.user

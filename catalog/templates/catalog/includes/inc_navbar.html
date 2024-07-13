@@ -19,14 +19,19 @@
                 </li>
             </ul>
             {% if user.is_authenticated %}
-            <p style="color: white" class="me-3 mb-0">
+            <a href="{% url 'users:profile' %}" class="d-flex text-decoration-none text-reset align-items-center">
+                <p style="color: white" class="me-3 mb-0">
                 {{ user.email }}
-            </p>
-            {% if user.avatar %}
-            <img src="{{ user.avatar|media_filter }}" class="rounded-circle me-3" style="height: 40px; width: 40px; object-fit: cover">
-            {% else %}
-            <img src="/media/users/no_profile.png" class="rounded-circle me-3" style="height: 40px; width: 40px; object-fit: cover">
-            {% endif %}
+                </p>
+                {% if user.avatar %}
+                <img src="{{ user.avatar|media_filter }}" class="rounded-circle me-3"
+                     style="height: 40px; width: 40px; object-fit: cover">
+                {% else %}
+                <img src="/media/users/no_profile.png" class="rounded-circle me-3"
+                     style="height: 40px; width: 40px; object-fit: cover">
+                {% endif %}
+            </a>
+
 
             <a href="{% url 'users:logout' %}" class="btn btn-primary me-3">
                 Выйти
