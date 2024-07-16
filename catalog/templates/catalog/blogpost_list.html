@@ -3,6 +3,7 @@
 {% load humanize %}
 {% load my_tags %}
 <h1 class="mt-3 text-center">Блог</h1>
+{% if perms.catalog.add_blogpost %}
 <div class="text-center">
     <button type="button" class="btn btn-lg btn-primary mt-3">
         <a href="{% url 'catalog:add_post' %}" class="text-decoration-none text-reset">
@@ -10,6 +11,7 @@
         </a>
     </button>
 </div>
+{% endif %}
 <div class="row mt-3">
     {% for post in object_list %}
     <div class="col">
@@ -28,20 +30,27 @@
                     <h4 class="card-title">{{ post.name }}</h4>
                     <p>{{ post.body|truncatechars:100 }}</p>
                     <p class="text-end">{{ post.views_count }} просмотров.</p>
+                    {% if user.is_authenticated %}
                     <div class="text-end">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-sm btn-outline-primary">
-                            <a href="{% url 'catalog:edit_post' post.pk %}" class="text-decoration-none text-reset">
-                                Изменить
-                            </a>
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger">
-                            <a href="{% url 'catalog:delete_post' post.pk  %}" class="text-decoration-none text-reset">
-                                Удалить
-                            </a>
-                        </button>
+                            {% if perms.catalog.add_blogpost %}
+                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                <a href="{% url 'catalog:edit_post' post.pk %}" class="text-decoration-none text-reset">
+                                    Изменить
+                                </a>
+                            </button>
+                            {% endif %}
+                            {% if perms.catalog.add_blogpost %}
+                            <button type="button" class="btn btn-sm btn-outline-danger">
+                                <a href="{% url 'catalog:delete_post' post.pk  %}"
+                                   class="text-decoration-none text-reset">
+                                    Удалить
+                                </a>
+                            </button>
+                            {% endif %}
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </a>
         </div>

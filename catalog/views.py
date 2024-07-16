@@ -1,11 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView
 from pytils.translit import slugify
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, BlogPost, Version
 from catalog.send_email import send_email
 
@@ -90,22 +91,34 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.author:
+            return ProductForm
+        if user.has_perms(['catalog.can_cancel_publication', 'catalog.can_edit_description', 'catalog.can_edit_category']):
+            return ProductModeratorForm
+        raise PermissionDenied
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:index')
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = BlogPost
     fields = ('name', 'body', 'preview', 'is_published',)
+    permission_required = 'catalog.add_blogpost'
     success_url = reverse_lazy('catalog:blog')
 
     def form_valid(self, form):
+        self.object = form.save()
         if form.is_valid():
             post = form.save()
             post.slug = slugify(post.name)
             post.save()
+        self.object.author = self.request.user
+        self.object.save()
         return super().form_valid(form)
 
 
@@ -133,8 +146,9 @@ class PostDetailView(DetailView):
         return self.object
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = BlogPost
+    permission_required = 'catalog.change_blogpost'
     fields = ('name', 'body', 'preview', 'is_published',)
 
     def form_valid(self, form):
@@ -148,6 +162,7 @@ class PostUpdateView(UpdateView):
         return reverse('catalog:post', args=[self.kwargs.get('pk')])
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = BlogPost
     success_url = reverse_lazy('catalog:blog')
+    permission_required = 'catalog.delete   _blogpost'

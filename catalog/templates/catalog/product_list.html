@@ -39,12 +39,14 @@
                         {% if user.is_authenticated %}
                         <div class="text-end mt-3">
                             <div class="btn-group" role="group" aria-label="Basic example">
+                                {% if perms.catalog.can_cancel_publication and perms.catalog.can_edit_description and perms.catalog.can_edit_category or user == product.author %}
                                 <button type="button" class="btn btn-sm btn-outline-primary">
                                     <a href="{% url 'catalog:edit_product' product.pk %}"
                                        class="text-decoration-none text-reset">
                                         Изменить
                                     </a>
                                 </button>
+                                {% endif %}
                                 <button type="button" class="btn btn-sm btn-outline-danger">
                                     <a href="{% url 'catalog:delete_product' product.pk  %}"
                                        class="text-decoration-none text-reset">
