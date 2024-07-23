@@ -9,7 +9,7 @@ from pytils.translit import slugify
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, BlogPost, Version, Category
 from catalog.send_email import send_email
-from catalog.services import get_categories
+from catalog.services import get_categories, get_products
 
 
 class ProductListView(ListView):
@@ -19,6 +19,7 @@ class ProductListView(ListView):
         context_data = super().get_context_data(*args, **kwargs)
         active_version = Version.objects.filter(is_current=True)
         context_data['active_version'] = active_version
+        context_data['product_list'] = get_products()
         return context_data
 
 
