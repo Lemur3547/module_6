@@ -7,8 +7,9 @@ from django.views.generic import ListView, DetailView, CreateView, View, UpdateV
 from pytils.translit import slugify
 
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
-from catalog.models import Product, BlogPost, Version
+from catalog.models import Product, BlogPost, Version, Category
 from catalog.send_email import send_email
+from catalog.services import get_categories
 
 
 class ProductListView(ListView):
@@ -103,6 +104,15 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:index')
+
+
+class CategoryView(ListView):
+    model = Category
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['category_list'] = get_categories()
+        return context_data
 
 
 class PostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
